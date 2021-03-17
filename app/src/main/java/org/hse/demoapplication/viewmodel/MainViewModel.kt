@@ -1,0 +1,26 @@
+package org.hse.demoapplication.viewmodel
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import org.hse.demoapplication.dbal.entity.GroupEntity
+import org.hse.demoapplication.dbal.entity.TeacherEntity
+import org.hse.demoapplication.dbal.entity.TimeTableWithTeacherEntity
+import org.hse.demoapplication.dbal.repository.HseRepository
+import java.util.*
+
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val hseRepository : HseRepository = HseRepository(application)
+
+    fun getGroups(): LiveData<List<GroupEntity>> {
+        return hseRepository.getGroups()
+    }
+
+    fun getTeachers(): LiveData<List<TeacherEntity>> {
+        return hseRepository.getTeachers()
+    }
+
+    fun getTimeTableTeacherByDate(date: Date): LiveData<List<TimeTableWithTeacherEntity>> {
+        return hseRepository.getTimeTableTeacherByDate(date)
+    }
+}

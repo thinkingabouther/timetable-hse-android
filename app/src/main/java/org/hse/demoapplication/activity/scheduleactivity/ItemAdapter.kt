@@ -1,4 +1,4 @@
-package org.hse.demoapplication.activity.ScheduleActivity
+package org.hse.demoapplication.activity.scheduleactivity
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import org.hse.demoapplication.R
 import org.hse.demoapplication.model.schedule.ScheduleItem
 import org.hse.demoapplication.model.schedule.ScheduleItemHeader
-import org.w3c.dom.Text
 import java.util.ArrayList
 
 class ItemAdapter(private val onItemClick: OnItemClick) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,7 +24,7 @@ class ItemAdapter(private val onItemClick: OnItemClick) : RecyclerView.Adapter<R
         private val placeTextView : TextView = view.findViewById(R.id.placeTextView)
         private val teacherTextView : TextView = view.findViewById(R.id.teacherTextView)
 
-        public fun bind(data : ScheduleItem) {
+        fun bind(data : ScheduleItem) {
             startTextView.text = data.start
             endTextView.text = data.end
             typeTextView.text = data.type
@@ -37,7 +36,7 @@ class ItemAdapter(private val onItemClick: OnItemClick) : RecyclerView.Adapter<R
 
     class ViewHolderHeader(view: View, context : Context, onItemClick: OnItemClick) : RecyclerView.ViewHolder(view) {
         private val titleTextView : TextView = view.findViewById(R.id.titleTextView)
-        public fun bind(data : ScheduleItemHeader) {
+        fun bind(data : ScheduleItemHeader) {
             titleTextView.text = data.title
         }
     }
@@ -56,7 +55,7 @@ class ItemAdapter(private val onItemClick: OnItemClick) : RecyclerView.Adapter<R
         throw IllegalArgumentException("Invalid view type")
     }
 
-    public override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position: Int): Int {
         val data = dataList[position]
         if (data is ScheduleItemHeader) return TYPE_HEADER
         return TYPE_ITEM

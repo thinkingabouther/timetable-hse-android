@@ -1,4 +1,4 @@
-package org.hse.demoapplication.activity.ScheduleActivity
+package org.hse.demoapplication.activity.scheduleactivity
 
 import android.os.Bundle
 import android.util.Log
