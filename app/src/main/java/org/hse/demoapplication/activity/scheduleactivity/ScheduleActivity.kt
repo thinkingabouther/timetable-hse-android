@@ -95,23 +95,25 @@ class ScheduleActivity : AppCompatActivity(), OnItemClick {
 
 
     private fun initData(list : ArrayList<ScheduleItem>) {
-        val dateFormat = getString(R.string.scheduleHeaderDateFormat)
-        val formatter = SimpleDateFormat(dateFormat, Locale("ru"))
-        val firstHeader = ScheduleItemHeader()
-        var previousDate = list[0].dateStart
-        firstHeader.title = formatter.format(previousDate)
-        val listForAdapter = ArrayList<ScheduleItem>()
-        listForAdapter.add(firstHeader)
-        list.forEach{
-            if (it.dateStart.day != previousDate.day){
-                val header = ScheduleItemHeader()
-                previousDate = it.dateStart
-                header.title = formatter.format(previousDate)
-                listForAdapter.add(header)
+        if (list.count() > 0) {
+            val dateFormat = getString(R.string.scheduleHeaderDateFormat)
+            val formatter = SimpleDateFormat(dateFormat, Locale("ru"))
+            val firstHeader = ScheduleItemHeader()
+            var previousDate = list[0].dateStart
+            firstHeader.title = formatter.format(previousDate)
+            val listForAdapter = ArrayList<ScheduleItem>()
+            listForAdapter.add(firstHeader)
+            list.forEach {
+                if (it.dateStart.day != previousDate.day) {
+                    val header = ScheduleItemHeader()
+                    previousDate = it.dateStart
+                    header.title = formatter.format(previousDate)
+                    listForAdapter.add(header)
+                }
+                listForAdapter.add(it)
             }
-            listForAdapter.add(it)
+            adapter.dataList = listForAdapter
         }
-        adapter.dataList = listForAdapter
     }
 
     private fun mapToScheduleItem(dto : TimeTableWithTeacherEntity) : ScheduleItem {

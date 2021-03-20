@@ -26,7 +26,7 @@ import java.util.*
 abstract class AbstractUserActivity : AppCompatActivity() {
 
     private val TAG = "AbstractUserActivity"
-    private val URL = getString(R.string.apiTimeUrl)
+    private val URL = "https://api.ipgeolocation.io/ipgeo?apiKey=b03018f75ed94023a005637878ec0977"
     protected lateinit var timeLabel : TextView
     protected var time : Date? = null
     protected lateinit var mainViewModel : MainViewModel

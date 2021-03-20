@@ -45,5 +45,5 @@
     <string name="timeTextViewDateFormat">EEEE, dd.MM</string>
     <string name="parseResponseDateFormat">yyyy-MM-dd HH:mm:ss.SSS</string>
     <string name="showTimeDateFormat">HH:mm, EEEE</string>
-    <string name="apiTimeUrl">https://api.ipgeolocation.io/ipgeo?apiKey=b03018f75ed94023a005637878ec0977</string>
+    <string name="apiTimeUrl"></string>
 </resources>

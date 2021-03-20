@@ -38,7 +38,7 @@
             android:id="@+id/currentLessonStateLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/currentLessonStateLabel_text" />
+            android:text="@string/currentLessonStateLabelNo_text" />
 
     </LinearLayout>
 
