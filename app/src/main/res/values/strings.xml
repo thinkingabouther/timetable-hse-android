@@ -16,7 +16,8 @@
     <string name="demoButton_text">DEMO</string>
     <string name="teacherSpinnerLabel_text">Выберите преподавателя:</string>
     <string name="timeLabel_text">Сейчас: %1$s</string>
-    <string name="currentLessonStateLabel_text">Идёт пара / не идёт</string>
+    <string name="currentLessonStateLabelNo_text">Не идёт пара</string>
+    <string name="currentLessonStateLabelYes_text">Идёт пара</string>
     <string name="disciplineLabel_text">Дисциплина</string>
     <string name="cabinetLabel_text">Кабинет</string>
     <string name="buildingLabel_text">Корпус</string>
@@ -38,4 +39,11 @@
     <string name="currentLightLabel_text">Текущая освещенность: %1$f</string>
     <string name="saveButton_text">Сохранить</string>
     <string name="sensorsListLabel_text">Список датчиков: %1$s</string>
+    <string name="transferDateFormat">yyyy.MM.dd</string>
+    <string name="scheduleItemDateFormat">HH:mm</string>
+    <string name="scheduleHeaderDateFormat">EEEE, dd MMM</string>
+    <string name="timeTextViewDateFormat">EEEE, dd.MM</string>
+    <string name="parseResponseDateFormat">yyyy-MM-dd HH:mm:ss.SSS</string>
+    <string name="showTimeDateFormat">HH:mm, EEEE</string>
+    <string name="apiTimeUrl"></string>
 </resources>

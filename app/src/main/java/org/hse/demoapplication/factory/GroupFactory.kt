@@ -9,7 +9,7 @@ class GroupFactory {
         fun createList(prefix: String, year: Int, groupsNumber: Int): ArrayList<Group> {
             val output = ArrayList<Group>()
             for (groupNumber in minGroupNumber..groupsNumber) {
-                output.add(Group(prefix, year, groupNumber))
+                output.add(Group(1, "123"))
             }
             return output
         }

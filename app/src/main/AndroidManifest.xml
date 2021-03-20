@@ -25,7 +25,7 @@
         <activity android:name=".activity.useractivity.StudentActivity"/>
         <activity android:name=".activity.useractivity.TeacherActivity"/>
         <activity android:name=".activity.PreferenceActivity"/>
-        <activity android:name=".activity.ScheduleActivity.ScheduleActivity"/>
+        <activity android:name=".activity.scheduleactivity.ScheduleActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
