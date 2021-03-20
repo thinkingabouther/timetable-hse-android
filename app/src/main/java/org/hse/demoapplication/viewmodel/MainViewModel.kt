@@ -20,7 +20,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return hseRepository.getTeachers()
     }
 
-    fun getTimeTableTeacherByDate(date: Date): LiveData<List<TimeTableWithTeacherEntity>> {
-        return hseRepository.getTimeTableTeacherByDate(date)
+    fun getCurrentTimetableByTeacher(teacherId: Int, date: Date): LiveData<TimeTableWithTeacherEntity> {
+        return hseRepository.getCurrentTimetableByTeacher(teacherId, date)
+    }
+
+    fun getCurrentTimetableByGroup(groupId: Int, date: Date): LiveData<TimeTableWithTeacherEntity> {
+        return hseRepository.getCurrentTimetableByGroup(groupId, date)
+    }
+
+    fun getTimetableForDayByGroup(groupId: Int, date: Date) : LiveData<List<TimeTableWithTeacherEntity>> {
+        return hseRepository.getTimetableForDayByGroup(groupId, date)
+    }
+
+    fun getTimetableForWeekByGroup(groupId: Int, date: Date) : LiveData<List<TimeTableWithTeacherEntity>> {
+        return hseRepository.getTimetableForWeekByGroup(groupId, date)
+    }
+
+    fun getTimetableForDayByTeacher(teacherId: Int, date: Date) : LiveData<List<TimeTableWithTeacherEntity>> {
+        return hseRepository.getTimetableForDayByTeacher(teacherId, date)
+    }
+
+    fun getTimetableForWeekByTeacher(teacherId: Int, date: Date) : LiveData<List<TimeTableWithTeacherEntity>> {
+        return hseRepository.getTimetableForWeekByTeacher(teacherId, date)
     }
 }

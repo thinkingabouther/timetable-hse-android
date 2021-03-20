@@ -20,10 +20,9 @@ import kotlin.collections.ArrayList
 
 class TeacherActivity : AbstractUserActivity() {
 
-
-    var selectedGroup : Group? = null;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        super.initTime()
         setContentView(R.layout.activity_teacher)
         mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
 
@@ -41,7 +40,7 @@ class TeacherActivity : AbstractUserActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 Log.d("OnItemSelected", "selectedItem: " + adapter.getItem(position).toString())
-                selectedGroup = adapter.getItem(position)
+                adapter.getItem(position)?.let { onSpinnerItemChanged(it) }
             }
         }
         weekScheduleButton.setOnClickListener {
@@ -50,8 +49,7 @@ class TeacherActivity : AbstractUserActivity() {
         dayScheduleButton.setOnClickListener {
             showScheduleImpl(ScheduleType.DAY)
         }
-        timeLabel = findViewById(R.id.timeLabel);
-        super.initTime()
+        timeLabel = findViewById(R.id.timeLabel)
     }
 
     private fun initTeachersList() {
@@ -62,7 +60,7 @@ class TeacherActivity : AbstractUserActivity() {
                 groupsResult.add(group)
                 Log.d("initGroupList", group.toString())
             }
-            adapter.clear();
+            adapter.clear()
             adapter.addAll(groupsResult)
         })
     }
@@ -73,15 +71,10 @@ class TeacherActivity : AbstractUserActivity() {
         super.showSchedule(ScheduleMode.TEACHER, type, selectedItem)
     }
 
-    override fun showTime(dateTime: Date) {
-        super.showTime(dateTime)
-        mainViewModel.getTimeTableTeacherByDate(dateTime).observe(this, Observer<List<TimeTableWithTeacherEntity>> {
-            for (listEntity: TimeTableWithTeacherEntity in it) {
-                Log.d("showTime", listEntity.timeTableEntity.subjName + " " + listEntity.teacherEntity.fio)
-                if (selectedGroup?.id == listEntity.timeTableEntity.teacherId) {
-                    initDataFromTimeTable(listEntity)
-                }
-            }
+    private fun onSpinnerItemChanged(group: Group) {
+        super.showTime()
+        mainViewModel.getCurrentTimetableByTeacher(group.id, time ?: Date()).observe(this, Observer<TimeTableWithTeacherEntity> {
+            initDataFromTimeTable(it)
         })
     }
 }

@@ -28,7 +28,7 @@ data class TimeTableEntity (
     val subjName : String,
 
     @ColumnInfo(name = "type")
-    val type : Int,
+    val type : String,
 
     @ColumnInfo(name = "time_start")
     val timeStart : Date?,

@@ -22,18 +22,16 @@ import org.hse.demoapplication.viewmodel.DateViewModel
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class AbstractUserActivity : AppCompatActivity() {
 
     private val TAG = "AbstractUserActivity"
-    private val URL = "https://api.ipgeolocation.io/ipgeo?apiKey=b03018f75ed94023a005637878ec0977"
+    private val URL = getString(R.string.apiTimeUrl)
     protected lateinit var timeLabel : TextView
-    private lateinit var time : Date
+    protected var time : Date? = null
     protected lateinit var mainViewModel : MainViewModel
     lateinit var adapter : ArrayAdapter<Group>
     protected val dateViewModel: DateViewModel by viewModels()
-    protected val scheduleList : ArrayList<TimeTableWithTeacherEntity> = ArrayList()
 
     private val client : OkHttpClient = OkHttpClient()
 
@@ -44,7 +42,7 @@ abstract class AbstractUserActivity : AppCompatActivity() {
         intent.putExtra(ScheduleActivity.ARG_MODE, mode)
         intent.putExtra(ScheduleActivity.ARG_NAME, item.name)
         intent.putExtra(ScheduleActivity.ARG_TIME,
-            SimpleDateFormat("EEEE, dd.MM", Locale("ru")).format(time))
+            SimpleDateFormat(getString(R.string.transferDateFormat), Locale("ru")).format(time?: Date()))
 
         startActivity(intent)
     }
@@ -77,11 +75,11 @@ abstract class AbstractUserActivity : AppCompatActivity() {
             Log.d(TAG, string)
             val timeResponse = gson.fromJson<TimeResponse>(string, TimeResponse::class.java)
             val currentTimeVal = timeResponse.getTimeZone().getCurrentTime()
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale("en"))
+            val simpleDateFormat = SimpleDateFormat(getString(R.string.parseResponseDateFormat), Locale("en"))
             val dateTime = simpleDateFormat.parse(currentTimeVal)
             dateTime?.also {
                 runOnUiThread {
-                    showTime(it)
+                    showTime()
                     dateViewModel.currentDate.value = it
                 }
             }
@@ -90,20 +88,31 @@ abstract class AbstractUserActivity : AppCompatActivity() {
         }
     }
 
-    protected open fun showTime(dateTime: Date) {
+    protected open fun showTime() {
         val nameObserver = Observer<Date> { newDate ->
-            val simpleDateFormat = SimpleDateFormat("HH:mm, EEEE", Locale("ru"))
+            val simpleDateFormat = SimpleDateFormat(getString(R.string.showTimeDateFormat), Locale("ru"))
             timeLabel.text = getString(R.string.timeLabel_text, simpleDateFormat.format(newDate))
+            time = newDate
         }
         dateViewModel.currentDate.observe(this, nameObserver)
     }
 
-    protected fun initDataFromTimeTable(listEntity: TimeTableWithTeacherEntity) {
-        currentLessonStateLabel.text = "Идёт пара"
-        val timetable = listEntity.timeTableEntity
-        disciplineLabel.text = timetable.subjName
-        cabinetLabel.text = timetable.cabinet
-        buildingLabel.text = timetable.corp
-        teacherLabel.text = listEntity.teacherEntity.fio
+    protected fun initDataFromTimeTable(listEntity: TimeTableWithTeacherEntity?) {
+        Log.d("initDataFromTimeTable", "inside")
+        if (listEntity != null) {
+            currentLessonStateLabel.text = getString(R.string.currentLessonStateLabelYes_text)
+            val timetable = listEntity.timeTableEntity
+            disciplineLabel.text = timetable.subjName
+            cabinetLabel.text = timetable.cabinet
+            buildingLabel.text = timetable.corp
+            teacherLabel.text = listEntity.teacherEntity.fio
+        }
+        else {
+            currentLessonStateLabel.text = getString(R.string.currentLessonStateLabelNo_text)
+            disciplineLabel.text = getString(R.string.disciplineLabel_text)
+            cabinetLabel.text = getString(R.string.cabinetLabel_text)
+            buildingLabel.text = getString(R.string.buildingLabel_text)
+            teacherLabel.text = getString(R.string.teacherLabel_text)
+        }
     }
 }

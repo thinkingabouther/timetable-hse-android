@@ -71,9 +71,9 @@ class DatabaseManager(context: Context) {
                 subGroup = "ПИ",
                 subjName = "Компьютерная графика",
                 corp = "Корпус 2",
-                type = 0,
-                timeStart = formatter.parse("2021-02-01 11:30"),
-                timeEnd = formatter.parse("2021-02-01 12:50"),
+                type = "Семинар",
+                timeStart = formatter.parse("2021-03-20 00:30"),
+                timeEnd = formatter.parse("2021-03-20 2:50"),
                 groupId = 1,
                 teacherId = 1)
         timeTables.add(timeTable1)
@@ -83,12 +83,60 @@ class DatabaseManager(context: Context) {
                 subGroup = "ПИ",
                 subjName = "Мобильная разработка",
                 corp = "Дистанционно",
-                type = 0,
-                timeStart = formatter.parse("2021-02-01 13:10"),
-                timeEnd = formatter.parse("2021-02-01 14:30"),
+                type = "Лекция",
+                timeStart = formatter.parse("2021-03-21 00:30"),
+                timeEnd = formatter.parse("2021-03-21 2:50"),
                 groupId = 2,
                 teacherId = 2)
         timeTables.add(timeTable2)
+        val timeTable3 = TimeTableEntity(
+            id = 3,
+            cabinet = "502",
+            subGroup = "ПИ",
+            subjName = "Мобильная разработка",
+            corp = "Дистанционно",
+            type = "Лекция",
+            timeStart = formatter.parse("2021-03-22 00:30"),
+            timeEnd = formatter.parse("2021-03-22 2:50"),
+            groupId = 2,
+            teacherId = 2)
+        timeTables.add(timeTable3)
+        var timeTable = TimeTableEntity(
+                id = 4,
+                cabinet = "502",
+                subGroup = "ПИ",
+                subjName = "Мобильная разработка",
+                corp = "Дистанционно",
+                type = "Лекция",
+                timeStart = formatter.parse("2021-03-20 00:30"),
+                timeEnd = formatter.parse("2021-03-20 2:50"),
+                groupId = 2,
+                teacherId = 2)
+        timeTables.add(timeTable)
+        timeTable = TimeTableEntity(
+                id = 5,
+                cabinet = "502",
+                subGroup = "ПИ",
+                subjName = "Мобильная разработка",
+                corp = "Дистанционно",
+                type = "Лекция",
+                timeStart = formatter.parse("2021-03-20 04:30"),
+                timeEnd = formatter.parse("2021-03-20 6:50"),
+                groupId = 2,
+                teacherId = 2)
+        timeTables.add(timeTable)
+        timeTable = TimeTableEntity(
+                id = 6,
+                cabinet = "502",
+                subGroup = "ПИ",
+                subjName = "Мобильная разработка",
+                corp = "Дистанционно",
+                type = "Лекция",
+                timeStart = formatter.parse("2021-03-21 05:30"),
+                timeEnd = formatter.parse("2021-03-21 6:50"),
+                groupId = 2,
+                teacherId = 2)
+        timeTables.add(timeTable)
         getInstance(context)?.getHseDao()?.insertTimeTable(timeTables)
     }
 }

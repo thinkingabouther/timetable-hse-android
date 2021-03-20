@@ -11,16 +11,15 @@ import kotlinx.android.synthetic.main.activity_student.*
 import org.hse.demoapplication.R
 import org.hse.demoapplication.dbal.entity.GroupEntity
 import org.hse.demoapplication.dbal.entity.TimeTableWithTeacherEntity
-import org.hse.demoapplication.viewmodel.MainViewModel
 import org.hse.demoapplication.model.enums.ScheduleMode
 import org.hse.demoapplication.model.enums.ScheduleType
 import org.hse.demoapplication.model.spinner.Group
+import org.hse.demoapplication.viewmodel.MainViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
 class StudentActivity : AbstractUserActivity() {
 
-    var selectedGroup : Group? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
@@ -39,7 +38,7 @@ class StudentActivity : AbstractUserActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 Log.d("OnItemSelected", "selectedItem: " + adapter.getItem(position).toString())
-                selectedGroup = adapter.getItem(position)
+                adapter.getItem(position)?.let { onSpinnerItemChanged(it) }
             }
         }
 
@@ -49,8 +48,15 @@ class StudentActivity : AbstractUserActivity() {
         dayScheduleButton.setOnClickListener {
             showScheduleImpl(ScheduleType.DAY)
         }
-        timeLabel = findViewById(R.id.timeLabel);
+        timeLabel = findViewById(R.id.timeLabel)
         super.initTime()
+    }
+
+    private fun onSpinnerItemChanged(group: Group) {
+        super.showTime()
+        mainViewModel.getCurrentTimetableByGroup(group.id, time ?: Date()).observe(this, Observer<TimeTableWithTeacherEntity> {
+            initDataFromTimeTable(it)
+        })
     }
 
     private fun showScheduleImpl(type : ScheduleType) {
@@ -67,20 +73,8 @@ class StudentActivity : AbstractUserActivity() {
                 groupsResult.add(group)
                 Log.d("initGroupList", group.toString())
             }
-            adapter.clear();
+            adapter.clear()
             adapter.addAll(groupsResult)
-        })
-    }
-
-    override fun showTime(dateTime: Date) {
-        super.showTime(dateTime)
-        mainViewModel.getTimeTableTeacherByDate(dateTime).observe(this, Observer<List<TimeTableWithTeacherEntity>>{
-            for (listEntity: TimeTableWithTeacherEntity in it) {
-                Log.d("showTime", listEntity.toString())
-                if (selectedGroup?.id == listEntity.timeTableEntity.groupId) {
-                    initDataFromTimeTable(listEntity)
-                }
-            }
         })
     }
 }
